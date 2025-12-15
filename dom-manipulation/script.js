@@ -13,7 +13,8 @@ function createAddQuoteForm() {
   let quoteText = document.getElementById("newQuoteText");
   let quoteCategory = document.getElementById("newQuoteCategory");
   let newQuote = { text: quoteText.value, category: quoteCategory.value };
-  localStorage.setItem("quotes", JSON.stringify(quotes));
+  localStorage.setItem("quotesList", JSON.stringify(quotes));
+  sessionStorage.setItem("latestQuote", JSON.stringify(newQuote));
   quotes.push(newQuote);
 }
 //  SHOW RANDOM QUOTE
@@ -26,7 +27,6 @@ function randomQuote() {
   paragraph.textContent = `${quotes[number].text} |
                              Category:${quotes[number].category}`;
   quoteDisplay.appendChild(paragraph);
-  console.log(paragraph);
 }
 showRandomQuote.addEventListener("click", () => randomQuote());
 window.addEventListener("DOMContentLoaded", () => randomQuote());
@@ -60,4 +60,11 @@ function saveQuotes(importedQuotes) {
   quotes = [...importedQuotes];
   localStorage.setItem("quotesList", JSON.stringify(quotes));
   alert("quotes loaded successfully");
+}
+
+function getLatestQuote() {
+  const latestQuote = JSON.parse(sessionStorage.getItem("latestQuote"));
+  quoteDisplay.innerHTML = `<p> Latest Quote:</p>
+ <p>text: ${latestQuote.text} </p>
+  <p>category: ${latestQuote.category} </p> `;
 }
