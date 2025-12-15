@@ -24,13 +24,16 @@ function randomQuote() {
   quoteDisplay.innerHTML = "";
   const paragraph = document.createElement("p");
   paragraph.textContent = `${quotes[number].text} |
-   Category:${quotes[number].category}`;
-
+                             Category:${quotes[number].category}`;
   quoteDisplay.appendChild(paragraph);
   console.log(paragraph);
 }
 showRandomQuote.addEventListener("click", () => randomQuote());
 window.addEventListener("DOMContentLoaded", () => randomQuote());
+window.addEventListener(
+  "DOMContentLoaded",
+  () => (quotes = [...JSON.parse(localStorage.getItem("quotesList"))])
+);
 
 function exportToJson() {
   const quotesList = JSON.stringify(quotes, "Empty", 2);
