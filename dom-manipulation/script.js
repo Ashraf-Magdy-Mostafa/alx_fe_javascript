@@ -7,9 +7,9 @@ let quotes = [
 ];
 const quoteDisplay = document.getElementById("quoteDisplay");
 const showRandomQuote = document.getElementById("newQuote");
-showRandomQuote.addEventListener("click", () => "");
+
 // ADD NEW QUOTE TO QUOTES ARRAY
-function addQuote() {
+function createAddQuoteForm() {
   let quoteText = document.getElementById("newQuoteText");
   let quoteCategory = document.getElementById("newQuoteCategory");
   let newQuote = { text: quoteText.value, category: quoteCategory.value };
