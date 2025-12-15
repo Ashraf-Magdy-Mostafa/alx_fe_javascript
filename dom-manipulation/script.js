@@ -35,7 +35,7 @@ window.addEventListener(
   () => (quotes = [...JSON.parse(localStorage.getItem("quotesList"))])
 );
 
-function exportToJson() {
+function exportToJsonFile() {
   const quotesList = JSON.stringify(quotes, "Empty", 2);
   const blob = new Blob([quotesList], { type: "application/json" });
   const url = URL.createObjectURL(blob);
