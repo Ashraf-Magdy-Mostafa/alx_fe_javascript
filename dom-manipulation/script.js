@@ -6,8 +6,8 @@ let quotes = [
   },
 ];
 const quoteDisplay = document.getElementById("quoteDisplay");
-const showNewQuote = document.getElementById("newQuote");
-showNewQuote.addEventListener("click", () => "");
+const showRandomQuote = document.getElementById("newQuote");
+showRandomQuote.addEventListener("click", () => "");
 // ADD NEW QUOTE TO QUOTES ARRAY
 function addQuote() {
   let quoteText = document.getElementById("newQuoteText");
@@ -22,4 +22,4 @@ function randomQuote() {
   quoteDisplay.innerHTML = `<p>${quotes[number].text}</p>
   <p>Category:${quotes[number].category}</p>`;
 }
-showNewQuote.addEventListener("click", () => randomQuote());
+showRandomQuote.addEventListener("click", () => randomQuote());
