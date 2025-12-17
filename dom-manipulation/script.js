@@ -72,14 +72,17 @@ function getLatestQuote() {
   <p>category: ${latestQuote.category} </p> `;
 }
 function populateCategories() {
-  for (let i = 0; i < quotes.length; i++) {
+  // use map
+  const categories = quotes.map((quote) => quote.category);
+  const uniqueCategories = [...new Set(categories)];
+  uniqueCategories.forEach((category) => {
     const option = document.createElement("option");
-    option.value = quotes[i].category;
-    option.innerText = quotes[i].category;
+    option.value = category;
+    option.innerText = category;
     selectMenu.appendChild(option);
-  }
+  });
 }
-function filterQuotes(event) {
+function categoryFilter(event) {
   let filteredQuotes = quotes.filter(
     (quote) => quote.category === selectMenu.value
   );
