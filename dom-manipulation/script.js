@@ -16,6 +16,11 @@ window.addEventListener(
   "DOMContentLoaded",
   () => (quotes = [...JSON.parse(localStorage.getItem("quotesList"))])
 );
+window.addEventListener("DOMContentLoaded", () => {
+  localStorage.getItem("latestFilter");
+  selectMenu.value = localStorage.getItem("latestFilter");
+  filterQuote({ target: selectMenu });
+});
 
 // ADD NEW QUOTE TO QUOTES ARRAY
 function createAddQuoteForm() {
