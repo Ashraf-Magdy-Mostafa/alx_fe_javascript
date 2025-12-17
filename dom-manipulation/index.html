@@ -30,11 +30,13 @@
       />
     </div>
     <div>
-      <select id="categoryFilter" onchange="categoryFilter(event)">
+      <select id="categoryFilter" onchange="filterQuote(event)">
         <option value="all">All Categories</option>
         <!-- Dynamically populated categories -->
       </select>
     </div>
+    <h3>Filtered Quotes:</h3>
+    <div id="filtered-quotes"></div>
 
     <script src="script.js"></script>
   </body>

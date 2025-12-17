@@ -7,7 +7,8 @@ let quotes = [
 ];
 const quoteDisplay = document.getElementById("quoteDisplay");
 const showRandomQuote = document.getElementById("newQuote");
-let selectMenu = document.getElementById("categoryFilter");
+const selectMenu = document.getElementById("categoryFilter");
+const filteredQuotesContainer = document.getElementById("filtered-quotes");
 
 window.addEventListener("DOMContentLoaded", () => randomQuote());
 window.addEventListener("DOMContentLoaded", () => populateCategories());
@@ -86,4 +87,22 @@ function categoryFilter(event) {
   let filteredQuotes = quotes.filter(
     (quote) => quote.category === selectMenu.value
   );
+}
+function filterQuote(event) {
+  localStorage.setItem("latestFilter", event.target.value);
+  filteredQuotesContainer.innerHTML = "";
+  let filteredQuotes = [];
+  if (event.target.value === "all") {
+    filteredQuotes = quotes;
+  } else {
+    filteredQuotes = quotes.filter(
+      (quote) => quote.category === selectMenu.value
+    );
+  }
+
+  filteredQuotes.forEach((quote) => {
+    const quoteElement = document.createElement("p");
+    quoteElement.innerHTML = `text: ${quote.text} | category: ${quote.category}`;
+    filteredQuotesContainer.appendChild(quoteElement);
+  });
 }
