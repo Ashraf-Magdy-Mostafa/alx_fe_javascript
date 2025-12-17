@@ -83,11 +83,11 @@ function populateCategories() {
     selectMenu.appendChild(option);
   });
 }
-function categoryFilter(event) {
-  let filteredQuotes = quotes.filter(
-    (quote) => quote.category === selectMenu.value
-  );
-}
+// function categoryFilter(event) {
+//   let filteredQuotes = quotes.filter(
+//     (quote) => quote.category === selectMenu.value
+//   );
+// }
 function filterQuote(event) {
   const selectedCategory = event.target.value;
   let filteredQuotes = [];
