@@ -89,10 +89,12 @@ function categoryFilter(event) {
   );
 }
 function filterQuote(event) {
-  localStorage.setItem("latestFilter", event.target.value);
-  filteredQuotesContainer.innerHTML = "";
+  const selectedCategory = event.target.value;
   let filteredQuotes = [];
-  if (event.target.value === "all") {
+  filteredQuotesContainer.innerHTML = "";
+  localStorage.setItem("latestFilter", selectedCategory);
+
+  if (selectedCategory === "all") {
     filteredQuotes = quotes;
   } else {
     filteredQuotes = quotes.filter(
