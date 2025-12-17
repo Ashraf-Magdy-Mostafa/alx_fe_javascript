@@ -7,6 +7,14 @@ let quotes = [
 ];
 const quoteDisplay = document.getElementById("quoteDisplay");
 const showRandomQuote = document.getElementById("newQuote");
+let selectMenu = document.getElementById("categoryFilter");
+
+window.addEventListener("DOMContentLoaded", () => randomQuote());
+window.addEventListener("DOMContentLoaded", () => populateCategories());
+window.addEventListener(
+  "DOMContentLoaded",
+  () => (quotes = [...JSON.parse(localStorage.getItem("quotesList"))])
+);
 
 // ADD NEW QUOTE TO QUOTES ARRAY
 function createAddQuoteForm() {
@@ -29,11 +37,6 @@ function randomQuote() {
   quoteDisplay.appendChild(paragraph);
 }
 showRandomQuote.addEventListener("click", () => randomQuote());
-window.addEventListener("DOMContentLoaded", () => randomQuote());
-window.addEventListener(
-  "DOMContentLoaded",
-  () => (quotes = [...JSON.parse(localStorage.getItem("quotesList"))])
-);
 
 function exportToJsonFile() {
   const quotesList = JSON.stringify(quotes, "Empty", 2);
@@ -67,4 +70,17 @@ function getLatestQuote() {
   quoteDisplay.innerHTML = `<p> Latest Quote:</p>
  <p>text: ${latestQuote.text} </p>
   <p>category: ${latestQuote.category} </p> `;
+}
+function populateCategories() {
+  for (let i = 0; i < quotes.length; i++) {
+    const option = document.createElement("option");
+    option.value = quotes[i].category;
+    option.innerText = quotes[i].category;
+    selectMenu.appendChild(option);
+  }
+}
+function filterQuotes(event) {
+  let filteredQuotes = quotes.filter(
+    (quote) => quote.category === selectMenu.value
+  );
 }
