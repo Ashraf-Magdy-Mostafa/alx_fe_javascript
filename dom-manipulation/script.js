@@ -12,10 +12,15 @@ const filteredQuotesContainer = document.getElementById("filtered-quotes");
 
 window.addEventListener("DOMContentLoaded", () => randomQuote());
 window.addEventListener("DOMContentLoaded", () => populateCategories());
-window.addEventListener(
-  "DOMContentLoaded",
-  () => (quotes = [...JSON.parse(localStorage.getItem("quotesList"))])
-);
+window.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("quotesList")) {
+    console.log("RESTORING FORM LOCAL STORAGE");
+    return (quotes = [...JSON.parse(localStorage.getItem("quotesList"))]);
+  } else {
+    console.log("filling LOCAL STORAGE");
+    return localStorage.setItem("quotesList", JSON.stringify(quotes));
+  }
+});
 window.addEventListener("DOMContentLoaded", () => {
   localStorage.getItem("latestFilter");
   selectMenu.value = localStorage.getItem("latestFilter");
@@ -113,3 +118,49 @@ function filterQuote(event) {
     filteredQuotesContainer.appendChild(quoteElement);
   });
 }
+
+async function fetchQuotesFromServer() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const serverQuotes = await response.json();
+  const serverQuotesList = serverQuotes.map((quote) => ({
+    id: quote.id,
+    text: quote.name,
+    category: quote.username,
+  }));
+  return serverQuotesList;
+}
+async function syncQuotes() {
+  const serverQuotes = await fetchQuotesFromServer();
+  const localQuotes = await JSON.parse(localStorage.getItem("quotesList"));
+  /// get server and compare to local
+  // if a quote isnt local then make it local - get it from server get data from local and update the array then push to LS
+  serverQuotes.forEach((serverquote) => {
+    // search local for a server quote
+    // server quote find index of local storage
+    const quoteIndex = localQuotes.findIndex(
+      (quote) => quote.text === serverquote.text
+    );
+    if (quoteIndex !== -1) {
+      localQuotes[quoteIndex] = serverquote;
+      notification("Conflicts resolved by using data from Server");
+    } else {
+      localQuotes.push(serverquote);
+      notification("Fetched and updated data from SERVER\nDATA SYNCED");
+    }
+  });
+  localStorage.setItem("quotesList", JSON.stringify(localQuotes));
+}
+// fetchQuotesFromSver();
+syncQuotes();
+
+function notification(cause) {
+  const notifacationContainer = document.getElementById("notifacation");
+  notifacationContainer.innerHTML = `<p><b> Notifacation:</b> </p>
+  <p>${cause}</p>`;
+  setTimeout(() => {
+    console.log("waiting");
+    notifacationContainer.innerHTML = "";
+  }, 5000);
+}
+
+setInterval(() => syncQuotes(), 20000);
