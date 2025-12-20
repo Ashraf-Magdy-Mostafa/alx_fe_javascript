@@ -26,6 +26,18 @@ window.addEventListener("DOMContentLoaded", () => {
   selectMenu.value = localStorage.getItem("latestFilter");
   filterQuote({ target: selectMenu });
 });
+async function postQuoteToServer(quote) {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(quote),
+  });
+
+  const data = await response.json();
+  console.log("Quote posted to server:", data);
+}
 
 // ADD NEW QUOTE TO QUOTES ARRAY
 function createAddQuoteForm() {
@@ -35,6 +47,7 @@ function createAddQuoteForm() {
   localStorage.setItem("quotesList", JSON.stringify(quotes));
   sessionStorage.setItem("latestQuote", JSON.stringify(newQuote));
   quotes.push(newQuote);
+  postQuoteToServer(newQuote);
 }
 //  SHOW RANDOM QUOTE
 function randomQuote() {
