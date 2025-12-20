@@ -164,6 +164,7 @@ async function syncQuotes() {
     }
   });
   localStorage.setItem("quotesList", JSON.stringify(localQuotes));
+  notification("Quotes synced with server!");
 }
 // fetchQuotesFromSver();
 syncQuotes();
