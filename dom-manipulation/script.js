@@ -120,12 +120,14 @@ function filterQuote(event) {
 }
 
 async function fetchQuotesFromServer() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=10"
+  );
   const serverQuotes = await response.json();
   const serverQuotesList = serverQuotes.map((quote) => ({
     id: quote.id,
-    text: quote.name,
-    category: quote.username,
+    text: quote.body,
+    category: quote.title,
   }));
   return serverQuotesList;
 }
